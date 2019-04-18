@@ -24,6 +24,10 @@ contract loyalty {
         require(user[msg.sender] == true);
     }
 
+    modifier onlyHC(address hcPK){
+        require(hungerCenter[hcPK] == true);
+    }
+
     function lp2user(address userPK , string memory receipt_id, uint receipt_price ) public onlyLP{
         require(user[userPK] == true);
         lpBalance[msg.sender] += receipt_price;
@@ -32,7 +36,7 @@ contract loyalty {
         emit Transfer(msg.sender , userPK , receipt_price);
     }
 
-    function user2hc(address hcPK , uint amount) public only_user(){
+    function user2hc(address hcPK , uint amount) public onlyUser onlyHC{
         require(userBalance[msg.sender] >= amount);
 
         userBalance[msg.sender] -= amount;
