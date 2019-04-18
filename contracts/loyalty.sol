@@ -16,7 +16,6 @@ contract loyalty {
         _;
     }
 
-
     function lp2user(address userPK , string memory receipt_id, uint receipt_price ) public onlyLP{
         require(user[userPK] == true);
         lpBalance[msg.sender] += receipt_price;
