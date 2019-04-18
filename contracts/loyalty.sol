@@ -1,4 +1,4 @@
-pragma solidity ^0.4.0;
+pragma solidity >=0.4.21 <0.6.0;
 
 contract loyalty {
 
@@ -22,10 +22,12 @@ contract loyalty {
 
     modifier onlyUser(){
         require(user[msg.sender] == true);
+        _;
     }
 
     modifier onlyHC(address hcPK){
         require(hungerCenter[hcPK] == true);
+        _;
     }
 
     function lp2user(address userPK , string memory receipt_id, uint receipt_price ) public onlyLP{
@@ -36,11 +38,11 @@ contract loyalty {
         emit Transfer(msg.sender , userPK , receipt_price);
     }
 
-    function user2hc(address hcPK , uint amount) public onlyUser onlyHC{
+    function user2hc(address hcPK , uint amount) public onlyUser onlyHC(hcPK){
         require(userBalance[msg.sender] >= amount);
 
         userBalance[msg.sender] -= amount;
-        hcPK[hc_address] += amount;
+        hcBalance[hcPK] += amount;
 
         emit Transfer(msg.sender , hcPK , amount);
     }
