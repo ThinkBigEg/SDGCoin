@@ -114,6 +114,7 @@ class FoodArchyDBManager:
         app.fp_register('121212', 'ElPrince', 'chicken, meat and liver', 'Imbaba')
         app.add_fp_menu_item('121212', '1', 'chicken', 'chicken', 'processed', '2019-04-23', 'True', 5, 1)
         app.add_fp_menu_item('121212', '2', 'raw-chicken', 'approached expiry', 'raw', '2019-04-20', 'True', 3, 1)
+        app.add_fp_menu_item('121212', '3', 'raw-meat', 'approached expiry', 'raw', '2019-04-20', 'True', 4, 1)
 
         # app.is_registered('lp', 'lp1')
         # app.get_tbl_data('lp')
