@@ -67,7 +67,7 @@ contract loyalty {
 
 
 
-    function lp2user(address userPK , uint receipt_price ) public onlyLP(msg.sender) onlyUser(userPK){
+    function lp2user(address userPK , uint receipt_price ) public{
         require(receipt_price != 0);
         lpProfile[msg.sender].loyalty_created += receipt_price;
         userprofile[userPK].loyalty_rec += receipt_price;
@@ -75,7 +75,7 @@ contract loyalty {
         emit Transfer(msg.sender , userPK , receipt_price);
     }
 
-    function user2hc(address hcPK , uint amount) public onlyUser(msg.sender) onlyHC(hcPK){
+    function user2hc(address hcPK , uint amount) public {
         uint curr = userprofile[msg.sender].loyalty_rec - userprofile[msg.sender].loyalty_spent;
         require( amount != 0 && curr >= amount);
         userprofile[msg.sender].loyalty_spent += amount;
@@ -84,7 +84,7 @@ contract loyalty {
         emit Transfer(msg.sender , hcPK , amount);
     }
 
-    function hc2fp(address fpPK, uint amount ) public onlyHC(msg.sender) onlyFP(fpPK){
+    function hc2fp(address fpPK, uint amount ) public {
         require(amount != 0);
         hcProfile[msg.sender].loyalty_spent += amount;
         fpProfile[fpPK].curr_loyalty += amount;
@@ -92,7 +92,7 @@ contract loyalty {
         emit Transfer(msg.sender,fpPK , amount);
     }
 
-    function fp2lp(address lpPK , uint amount)public onlyFP(msg.sender) onlyLP(lpPK){
+    function fp2lp(address lpPK , uint amount)public {
         require(amount != 0 && fpProfile[msg.sender].curr_loyalty >= amount);
         fpProfile[msg.sender].curr_loyalty -= amount;
         lpProfile[lpPK].loyalty_paid += amount;
