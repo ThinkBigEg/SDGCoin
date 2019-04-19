@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-    <title>HC UnReg</title>
+    <title>LP UnReg</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 
@@ -40,36 +40,42 @@
                                     <a href="#">
                                         <i class="glyphicon glyphicon-star"></i>
                                         PK</a>
-                                    <input type="text" id="HPK" class="form-control" placeholder="Enter PK">
-
+                                    <input type="text" id="PK" class="form-control" placeholder="Enter PK">
                                 </li>
 
                                 <li>
                                     <a href="#">
                                         <i class="glyphicon glyphicon-star"></i>
                                         Name</a>
-                                    <input type="text" id="Hname" class="form-control" placeholder="Enter name">
-
+                                    <input type="text" id="name" class="form-control" placeholder="Enter name">
                                 </li>
+
 
                                 <li>
                                     <a href="#">
                                         <i class="glyphicon glyphicon-star"></i>
                                         Desc</a>
-                                    <input type="text" id="Hdesc" class="form-control" placeholder="Write Description">
+                                    <input type="text" id="desc" class="form-control" placeholder="Write Description">
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-star"></i>
+                                        Percentage</a>
+                                    <input type="text" id="perc" class="form-control" placeholder="Write Percentage">
                                 </li>
 
                                 <li>
                                     <a href="#">
                                         <i class="glyphicon glyphicon-star"></i>
                                         Location</a>
-                                    <input type="text" id="Hlocation" class="form-control" placeholder="Enter Location">
+                                    <input type="text" id="location" class="form-control" placeholder="Enter Location">
                                 </li>
 
                             </ul>
                         </div>
                         <div class="profile-userbuttons">
-                            <button type="submit" id="Hregister" class="btn btn-primary">Register</button>
+                            <button type="submit" id="register" class="btn btn-primary">Register</button>
                         </div>
                     </form>
                     <!-- END MENU -->
@@ -80,24 +86,28 @@
     </div>
 
     <br>
-    <script type="text/javascript"></script>
     <script type="text/javascript">
         var serverIP = "34.74.167.90";
-        $("#Hregister").on('click', function () {
-            var name = document.getElementById("Hname").value;
-            var location = document.getElementById("Hlocation").value;
-            var desc = document.getElementById("Hdesc").value;
-            var pk = document.getElementById("HPK").value;
+        $(document).on('click', "#register", function () {
+            var name = document.getElementById("name").value;
+            var location = document.getElementById("location").value;
+            var desc = document.getElementById("desc").value;
+            var perc = document.getElementById("perc").value;
+            var pk = document.getElementById("PK").value;
             alert("Done");
             $.ajax({
                 dataType: "json",
-                url: "http://" + serverIP + ":5000/app/register/hc/" + pk + "/" + name + "/" + desc + "/" + location,
+                url: "http://" + serverIP + ":5000/app/register/lp/" + pk + "/" + name + "/" + desc + "/" + location + "/" + perc + "/",
                 success: function (data) {
-                    alert(data);
+                    alert("Success");
                     console.log(data);
                 }
+
             });
         })</script>
+    <script type="text/javascript">
+        var perc = String(document.getElementById("perc").value);
+        localStorage.setItem('perc', perc)</script>
 
 </body>
 
