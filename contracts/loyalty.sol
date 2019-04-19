@@ -8,9 +8,15 @@ contract loyalty {
         uint loyalty_paid;
     }
 
-    mapping (address => loyaltyProviderProfile) lpProfile;
-    mapping (address => bool) loyaltyProvider;
+    struct userProfile{
+        uint loyalty_rec;
+        uint loyalty_spent;
+    }
 
+    mapping (address => loyaltyProviderProfile) lpProfile;
+    mapping (address => userProfile) userprofile;
+
+    mapping (address => bool) loyaltyProvider;
     mapping (address => bool) user;
 
 
@@ -41,6 +47,12 @@ contract loyalty {
         lpProfile[lpPK].loyalty_paid = 0;
     }
 
+    function create_user(address userPK) public{
+        user[userPK] = true;
+        userprofile[userPK].loyalty_rec = 0;
+        userprofile[userPK].loyalty_spent = 0;
+    }
+
     function get_lp_profile_perc(address lpPK) public returns(uint){
         return lpProfile[lpPK].curr_perc;
     }
@@ -51,6 +63,14 @@ contract loyalty {
 
     function get_lp_profile_paid(address lpPK) public returns(uint){
         return lpProfile[lpPK].loyalty_paid;
+    }
+
+    function get_user_loyalty_recv(address userPK) public returns(uint){
+        return userprofile[userPK].loyalty_rec;
+    }
+
+    function get_user_loyalty_spent(address userPK) public returns(uint){
+        return userprofile[userPK].loyalty_spent;
     }
 
     function lp2user(address userPK , string memory receipt_id, uint receipt_price ) public onlyLP{
