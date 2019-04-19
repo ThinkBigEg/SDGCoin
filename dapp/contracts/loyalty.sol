@@ -16,7 +16,6 @@ contract loyalty {
     struct hungerCenterProfile{
         uint loyalty_recv;
         uint loyalty_spent;
-        uint meal_purchased;
     }
 
     struct foodProviderProfile{
@@ -36,7 +35,6 @@ contract loyalty {
     mapping (address => foodProviderProfile) fpProfile;
 
     event Transfer(address from , address to , uint amount);
-    event UpdatePerc(address from , uint new_perc , string msg);
 
     modifier onlyLP(address lpPK){
         require(loyaltyProvider[lpPK] == true);
@@ -56,32 +54,6 @@ contract loyalty {
     modifier onlyFP(address _fpPK){
         require(foodProvider[_fpPK] == true);
         _;
-    }
-
-    //who creates LP?
-    function create_lp(address lpPK, uint curr_perc ) public{
-        loyaltyProvider[lpPK] = true;
-        lpProfile[lpPK].curr_perc = curr_perc;
-        lpProfile[lpPK].loyalty_created = 0;
-        lpProfile[lpPK].loyalty_paid = 0;
-    }
-
-    function create_user(address _userPK) public{
-        user[_userPK] = true;
-        userprofile[_userPK].loyalty_rec = 0;
-        userprofile[_userPK].loyalty_spent = 0;
-    }
-
-    function create_hc(address hcPK) public{
-        hungerCenter[hcPK] = true;
-        hcProfile[hcPK].loyalty_spent = 0;
-        hcProfile[hcPK].loyalty_recv = 0;
-        hcProfile[hcPK].meal_purchased = 0;
-    }
-
-    function create_fp(address fpPK) public{
-        foodProvider[fpPK] = true;
-        fpProfile[fpPK].curr_loyalty = 0;
     }
 
     function get_lp_profile_perc(address lpPK) public view returns(uint){
@@ -112,21 +84,11 @@ contract loyalty {
         return hcProfile[hcPK].loyalty_spent;
     }
 
-    function get_hc_meal_purchased(address hcPK) public view returns(uint){
-        return hcProfile[hcPK].meal_purchased;
-    }
-
     function get_fp_curr_loyalty(address fpPK) public view returns(uint){
         return fpProfile[fpPK].curr_loyalty;
     }
 
-    function update_lp_perc(uint new_perc) public onlyLP(msg.sender){
-        lpProfile[msg.sender].curr_perc = new_perc;
-
-        emit UpdatePerc(msg.sender, new_perc , "Update curr_perc");
-    }
-
-    function lp2user(address userPK , string memory receipt_id, uint receipt_price ) public onlyLP(msg.sender) onlyUser(userPK){
+    function lp2user(address userPK , uint receipt_price ) public onlyLP(msg.sender) onlyUser(userPK){
         require(receipt_price != 0);
         lpProfile[msg.sender].loyalty_created += receipt_price;
         userprofile[userPK].loyalty_rec += receipt_price;
@@ -143,7 +105,7 @@ contract loyalty {
         emit Transfer(msg.sender , hcPK , amount);
     }
 
-    function hc2fp(address fpPK , uint order_id , uint amount ) public onlyHC(msg.sender) onlyFP(fpPK){
+    function hc2fp(address fpPK, uint amount ) public onlyHC(msg.sender) onlyFP(fpPK){
         require(amount != 0);
         hcProfile[msg.sender].loyalty_spent += amount;
         fpProfile[fpPK].curr_loyalty += amount;
