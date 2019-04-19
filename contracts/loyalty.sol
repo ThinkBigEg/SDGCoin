@@ -2,12 +2,16 @@ pragma solidity >=0.4.21 <0.6.0;
 
 contract loyalty {
 
+    struct loyaltyProviderProfile{
+        uint curr_perc;
+        uint loyalty_created;
+        uint loyalty_paid;
+    }
 
+    mapping (address => loyaltyProviderProfile) lpProfile;
     mapping (address => bool) loyaltyProvider;
-    mapping (address => uint) lpBalance;
 
     mapping (address => bool) user;
-    mapping (address => uint) userBalance;
 
 
     mapping (address => bool) hungerCenter;
@@ -29,11 +33,30 @@ contract loyalty {
         require(hungerCenter[hcPK] == true);
         _;
     }
+    //who creates LP?
+    function create_lp(address lpPK, uint curr_perc ) public{
+        loyaltyProvider[lpPK] = true;
+        lpProfile[lpPK].curr_perc = curr_perc;
+        lpProfile[lpPK].loyalty_created = 0;
+        lpProfile[lpPK].loyalty_paid = 0;
+    }
+
+    function get_lp_profile_perc(address lpPK) public returns(uint){
+        return lpProfile[lpPK].curr_perc;
+    }
+
+    function get_lp_profile_created(address lpPK) public returns(uint){
+        return lpProfile[lpPK].loyalty_created;
+    }
+
+    function get_lp_profile_paid(address lpPK) public returns(uint){
+        return lpProfile[lpPK].loyalty_paid;
+    }
 
     function lp2user(address userPK , string memory receipt_id, uint receipt_price ) public onlyLP{
         require(user[userPK] == true);
-        lpBalance[msg.sender] += receipt_price;
-        userBalance[userPK] += receipt_price;
+        lpProfile[msg.sender].loyalty_created += receipt_price;
+        userProfile[userPK].loyalty_recv += receipt_price;
 
         emit Transfer(msg.sender , userPK , receipt_price);
     }
