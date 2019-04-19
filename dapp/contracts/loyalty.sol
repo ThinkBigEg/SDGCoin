@@ -22,39 +22,16 @@ contract loyalty {
         uint curr_loyalty;
     }
 
-    mapping (address => bool) loyaltyProvider;
     mapping (address => loyaltyProviderProfile) lpProfile;
 
-    mapping (address => bool) user;
     mapping (address => userProfile) userprofile;
 
-    mapping (address => bool) hungerCenter;
     mapping (address => hungerCenterProfile) hcProfile;
 
-    mapping (address => bool) foodProvider;
     mapping (address => foodProviderProfile) fpProfile;
 
     event Transfer(address from , address to , uint amount);
 
-    modifier onlyLP(address lpPK){
-        require(loyaltyProvider[lpPK] == true);
-        _;
-    }
-
-    modifier onlyUser(address _userPK){
-        require(user[_userPK] == true);
-        _;
-    }
-
-    modifier onlyHC(address hcPK){
-        require(hungerCenter[hcPK] == true);
-        _;
-    }
-
-    modifier onlyFP(address _fpPK){
-        require(foodProvider[_fpPK] == true);
-        _;
-    }
 
     function get_lp_profile_perc(address lpPK) public view returns(uint){
         return lpProfile[lpPK].curr_perc;
@@ -87,6 +64,8 @@ contract loyalty {
     function get_fp_curr_loyalty(address fpPK) public view returns(uint){
         return fpProfile[fpPK].curr_loyalty;
     }
+
+
 
     function lp2user(address userPK , uint receipt_price ) public onlyLP(msg.sender) onlyUser(userPK){
         require(receipt_price != 0);
