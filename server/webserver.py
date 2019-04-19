@@ -26,6 +26,10 @@ sql_conf = {
 
 fadb = FoodArchyDBManager(sql_conf)
 
+fadb.reset()
+fadb.init_database()
+fadb.insert_poc_data()
+
 
 @app.route("/test/<int:count>", methods=["GET"])
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])

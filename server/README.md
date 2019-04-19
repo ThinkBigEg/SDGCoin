@@ -2,7 +2,7 @@
 
 
 ### Run MYSQL 
- - docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=```passpass``` -d mysql
+ - docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=```passpass``` -d mysql:5.6
 
 ### Install python pre-requisites 
  - PYTHON 3.5

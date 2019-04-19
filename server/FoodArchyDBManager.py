@@ -105,16 +105,16 @@ class FoodArchyDBManager:
         self.reset()
         self.init_database()
         # ---------------------------------------
-        app.lp_register('12345', 'Carrefour', 'Carrefour Store', '6 October', 0.025)
-        app.lp_register('54321', 'Pizza Hut', 'Pizza Food & Deliver', 'Mohandesin', 0.01)
+        self.lp_register('12345', 'Carrefour', 'Carrefour Store', '6 October', 0.025)
+        self.lp_register('54321', 'Pizza Hut', 'Pizza Food & Deliver', 'Mohandesin', 0.01)
 
-        app.hc_register('11111', 'Resala', 'Resala description', 'Haram')
-        app.hc_register('22222', 'DarElOrman', 'Charity Organization', 'Dokki')
+        self.hc_register('11111', 'Resala', 'Resala description', 'Haram')
+        self.hc_register('22222', 'DarElOrman', 'Charity Organization', 'Dokki')
 
-        app.fp_register('121212', 'ElPrince', 'chicken, meat and liver', 'Imbaba')
-        app.add_fp_menu_item('121212', '1', 'chicken', 'chicken', 'processed', '2019-04-23', 'True', 5, 1)
-        app.add_fp_menu_item('121212', '2', 'raw-chicken', 'approached expiry', 'raw', '2019-04-20', 'True', 3, 1)
-        app.add_fp_menu_item('121212', '3', 'raw-meat', 'approached expiry', 'raw', '2019-04-20', 'True', 4, 1)
+        self.fp_register('121212', 'ElPrince', 'chicken, meat and liver', 'Imbaba')
+        self.add_fp_menu_item('121212', '1', 'chicken', 'chicken', 'processed', '2019-04-23', 'True', 5, 1)
+        self.add_fp_menu_item('121212', '2', 'raw-chicken', 'approached expiry', 'raw', '2019-04-20', 'True', 3, 1)
+        self.add_fp_menu_item('121212', '3', 'raw-meat', 'approached expiry', 'raw', '2019-04-20', 'True', 4, 1)
 
         # app.is_registered('lp', 'lp1')
         # app.get_tbl_data('lp')
