@@ -54,8 +54,7 @@ contract loyalty {
     }
 
     function get_hc_loyalty_recv() public view returns(uint){
-        return 1;
-        //return hcProfile[msg.sender].loyalty_recv;
+        return hcProfile[msg.sender].loyalty_recv;
     }
 
     function get_hc_loyalty_spent(address hcPK) public view returns(uint){
