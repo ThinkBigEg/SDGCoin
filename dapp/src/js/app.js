@@ -170,7 +170,9 @@ App = { //app is equal to big object
 
     bindEvents: function () {
         $(document).on('click', '.btn-user2hc', App.user2hc);
-
+        $(document).on('click', '.btn-lp2user', App.lp2user);
+        $(document).on('click', '.btn-hc2fp', App.hc2fp);
+        $(document).on('click', '.btn-fp2lp', App.fp2lp);
 
 
     },
@@ -205,15 +207,14 @@ App = { //app is equal to big object
     lp2user: function(event){
         event.preventDefault();
 
-        var user_pk = document.getElementById("USRPK").value;
-        var amount = document.getElementById("amount").value;
+        var user_pk = document.getElementById("UPK").value;
+        var amount = document.getElementById("rece_price").value;
 
-        console.log("here")
+        console.log(user_pk, amount)
         web3.eth.getAccounts(function (error, accounts) {
             if (error) {
                 console.log(error);
             }
-            console.log(accounts)
             var account = accounts[0];
             App.contracts.loyalty.deployed().then(function (instance) {
                 // Execute createIns as a transaction by sending account
@@ -232,27 +233,32 @@ App = { //app is equal to big object
     hc2fp: function(event){
         event.preventDefault();
 
-        var fp_pk = document.getElementById("FPPK").value;
-        var amount = document.getElementById("amount").value;
+        //var fp_pk = document.getElementById("FPPK").value;
+        //var amount = document.getElementById("amount").value;
 
         console.log("here")
         web3.eth.getAccounts(function (error, accounts) {
             if (error) {
                 console.log(error);
             }
-            console.log(accounts)
             var account = accounts[0];
             App.contracts.loyalty.deployed().then(function (instance) {
                 // Execute createIns as a transaction by sending account
-                instance.hc2fp(fp_pk, amount, {from: account});
+                /*instance.hc2fp(fp_pk, amount, {from: account});
                 instance.Transfer().watch(function (err, res) {
-                    if (!err) {
+                      if (!err) {
                         console.log(res);
                     }
                 });
             }).catch(function (err) {
                 console.log(err.message);
+            });*/
+
+            instance.get_hc_loyalty_recv(function (err,value) {
+                console.log(value);
+                $("#loyalty_recieved").html("recieved:  " + value);
             });
+        });
         });
     },
 
