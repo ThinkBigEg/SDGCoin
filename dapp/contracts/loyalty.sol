@@ -45,16 +45,16 @@ contract loyalty {
         return lpProfile[lpPK].loyalty_paid;
     }
 
-    function get_user_loyalty_recv(address userPK) public view returns(uint){
-        return userprofile[userPK].loyalty_rec;
+    function get_user_loyalty_recv() public view returns(uint){
+        return userprofile[msg.sender].loyalty_rec;
     }
 
-    function get_user_loyalty_spent(address userPK) public view returns(uint){
-        return userprofile[userPK].loyalty_spent;
+    function get_user_loyalty_spent() public view returns(uint){
+        return userprofile[msg.sender].loyalty_spent;
     }
 
-    function get_hc_loyalty_recv() public view returns(uint){
-        return hcProfile[msg.sender].loyalty_recv;
+    function get_hc_loyalty_recv(address hcPK) public view returns(uint){
+        return hcProfile[hcPK].loyalty_recv;
     }
 
     function get_hc_loyalty_spent(address hcPK) public view returns(uint){
